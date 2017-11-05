@@ -1,0 +1,49 @@
+/* =---=---=---=---=---= Colors =---=---=---=---=---=---= */
+
+$white: #FFF;
+
+$gray-black: #333;
+$black: #131313;
+$real-black: #000;
+
+// =---=---=---=---=---=---=---=---=---=---=
+
+$theme-colors: (
+  primary: #42b983,
+  secondary: #2c3e50,
+  tertiary: $white
+);
+
+@function color($color: "primary") {
+  @return map-get($theme-colors, $color);
+}
+
+$status-colors: (
+  normal: transparent,
+  success: rgb(58, 255, 74),
+  warning: rgb(248, 245, 53),
+  danger: rgb(243, 50, 50),
+  info: rgb(76, 205, 245)
+);
+
+@function status($color: "normal") {
+  @return map-get($status-colors, $color);
+}
+
+
+/* =---=---=---=---=---= Body =---=---=---=---=---=---= */
+
+$body-bg: $white;
+$body-color: #2c3e50;
+
+/* =---=---=---=---=---= Font =---=---=---=---=---=---= */
+
+$font: "Avenir",
+       Helvetica,
+       "Noto Sans CJK TC",
+       Arial,
+       sans-serif;
+
+/* =---=---=---=---=---= Link =---=---=---=---=---=---= */
+
+$link-color: #42b983;
