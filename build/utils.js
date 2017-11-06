@@ -28,14 +28,14 @@ exports.cssLoaders = function (options) {
       const isSass = (loader === 'sass' || loader === 'scss')
 
       // Add postcss to sass
-      if (isSass) {
+      /*if (isSass) {
         loaders.push({
           loader: 'postcss-loader',
           options: Object.assign({}, loaderOptions, {
             sourceMap: options.sourceMap
           })
         })
-      }
+      }*/
 
       loaders.push({
         loader: loader + '-loader',
@@ -44,14 +44,14 @@ exports.cssLoaders = function (options) {
         })
       })
 
-      if (isSass) {
+      /*if (isSass) {
         loaders.push({
           loader: 'sass-resources-loader',
           options: {
             resources: path.resolve(__dirname, '../global.scss')
           }
         })
-      }
+      }*/
     }
 
     // Extract CSS when that option is specified
