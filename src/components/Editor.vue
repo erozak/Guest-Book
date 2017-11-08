@@ -1,6 +1,7 @@
 <template lang="pug">
-  form.editor.flex-static(v-show="toggler")
+  form.editor(v-show="toggler")
     .container
+      h2.mt-0.mb-4.d-flex.flex-ai-center.title.text-left Comment
       .input-group.groupon
         //- Name
         .addon.input-group.flex-gorw
@@ -11,7 +12,7 @@
               placeholder="I'm ..."
               v-model="name"
               v-validate.initial="'alpha_spaces|max:56'"
-              :class="{'invalid': errors.has('name') }"
+              :class="{invalid: errors.has('name') }"
             )
 
         //- Gender
@@ -40,7 +41,7 @@
             placeholder="Contact me at ..."
             v-model="mail"
             v-validate.initial="'email'"
-            :class="{'invalid': errors.has('mail') }"
+            :class="{invalid: errors.has('mail') }"
           )
 
       //- Message
@@ -52,7 +53,7 @@
             placeholder="Type somthimg ..."
             v-model="message"
             v-validate="'max:140|required'"
-            :class="{'invalid': errors.has('msg') }"
+            :class="{invalid: errors.has('msg') }"
           )
 
       p.msgbox
@@ -60,7 +61,7 @@
         span.d-block {{errors.first('mail')}}
         span.d-block {{errors.first('msg')}}
 
-      button.btn.flex-static(
+      button.btn.flex-static.mb-5(
         type="button"
         @click="onSignIn"
         :disabled="errors.any() || message.length <= 0"

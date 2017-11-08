@@ -2,7 +2,6 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  border-top: 5px solid color("secondary");
   min-height: 100vh;
 }
 
@@ -13,12 +12,26 @@
 
 
 #header,
-#main,
 #footer {
   position: relative;
 }
 
+#header-wrap {
+  top: 0;
+  left: 0;
+  position: fixed;
+  border-top: $deco-height solid color("secondary");
+  padding-bottom: .2em;
+  width: 100%;
+  max-height: 100vh;
+  background-color: rgba($white, .76);
+  overflow-y: auto;
+  z-index: 50;
+}
+
 #header {
+  background-color: $white;
+
   h1 {
     color: color("secondary");
   }
@@ -33,12 +46,18 @@
   }
 }
 
+#main {
+  z-index: 20;
+}
+
 #footer {
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: .75em;
   padding: $box-padding;
+  background-color: $white;
+  z-index: 10;
 
   .fa-icon {
     margin-bottom: -2px;
@@ -47,15 +66,30 @@
   }
 }
 
+#greet {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  align-self: center;
+  margin-top: -$editor-toggle-height - gutter(2);
+  padding-right: $editor-toggle-width + $editor-toggle-right + gutter(4);
+  width: 100%;
+  min-height: $editor-toggle-height + gutter(2);
+  color: status("muted");
+  font-weight: 700;
+  text-align: right;
+}
+
 #editor-toggler {
-  right: gutter(5);
-  bottom: 0;
-  position: absolute;
+  top: gutter(1);
+  position: sticky;
+  align-self: flex-end;
+  margin-right: $editor-toggle-right;
   border: 0 none;
   border-radius: 2rem;
   padding: gutter(3) 1rem;
-  width: 4.5rem;
-  height: 2.5rem;
+  width: $editor-toggle-width;
+  height: $editor-toggle-height;
   z-index: 60;
   background-color: color("primary");
   transition: all $transition-speed $transition-cuz;

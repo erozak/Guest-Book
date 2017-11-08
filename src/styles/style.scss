@@ -3,6 +3,14 @@
 @import "./variables";
 @import "./utils";
 
+$deco-height: 5px;
+
+$editor-toggle-right: gutter(2);
+$editor-toggle-bottom: gutter(2);
+$editor-toggle-width: 4.5rem;
+$editor-toggle-height: 2.5rem;
+
+
 *,
 *::before,
 *::after {

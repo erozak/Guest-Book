@@ -1,14 +1,17 @@
 <template lang="pug">
   #app
     .body-wrap
-      App-header
-      main#main.body-inner.flex-gorw
-        Editor-toggler(:status="ui.toggler.editor" @on-editor-toggle="onEditorToggle")
-        Editor(
-          :toggler="ui.toggler.editor"
-          @on-signin-msg="onSigninMsg"
-          @on-editor-toggle="onEditorToggle"
-        )
+      #header-wrap
+        App-header
+        .container.d-flex.flex-column
+          Editor-toggler(:status="ui.toggler.editor" @on-editor-toggle="onEditorToggle")
+          #greet(ref="greetEl") {{greet}}
+          Editor(
+            :toggler="ui.toggler.editor"
+            @on-signin-msg="onSigninMsg"
+            @on-editor-toggle="onEditorToggle"
+          )
+      main#main.body-inner.container.flex-gorw(:style="{'padding-top': ui.offset.mainTop + 'px'}")
         Book(:messages="messages")
       App-footer(v-bind="author")
 </template>
@@ -24,18 +27,22 @@ export default {
   name: 'App',
   data() {
     return {
+      greet: 'Come Leave some message to us!',
       author: {
         name: 'Erozak',
         website: 'https://github.erozak.com',
         repo: 'https://github.com/erozak/Guest-Book',
         timestamp: '2017',
       },
+      messages: [],
       ui: {
+        offset: {
+          mainTop: 0,
+        },
         toggler: {
           editor: false,
         },
       },
-      messages: [],
     };
   },
   computed: {
@@ -47,12 +54,23 @@ export default {
     },
   },
   methods: {
+    onWindowResize() {
+      const newHeight = this.$refs.greetEl.getBoundingClientRect().bottom;
+
+      if (newHeight !== this.ui.offset.mainTop) {
+        this.ui.offset.mainTop = newHeight;
+      }
+    },
     onSigninMsg(msg) {
       this.messages.unshift(msg);
     },
     onEditorToggle({ status }) {
       this.ui.toggler.editor = status;
     },
+  },
+  mounted() {
+    this.ui.offset.mainTop = this.$refs.greetEl.getBoundingClientRect().bottom;
+    window.addEventListener('resize', this.onWindowResize);
   },
   components: {
     AppHeader,

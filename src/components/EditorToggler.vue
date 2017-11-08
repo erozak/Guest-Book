@@ -2,7 +2,7 @@
   button#editor-toggler(
     type="button"
     :title="title"
-    :class="{'actived': status}"
+    :class="{actived: status}"
     @click="toggle"
   )
     Icon(:name="icon")

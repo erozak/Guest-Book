@@ -7,8 +7,18 @@
   flex-grow: 1 !important;
 }
 
-.flex-mid {
+@each $value in (row, column) {
+  .flex-#{$value} {
+    flex-direction: $value !important;
+  }
+}
+
+.flex-jc-center {
   justify-content: center !important;
+}
+
+.flex-ai-center {
+  align-items: center !important;
 }
 
 .self-center {
@@ -42,9 +52,15 @@
   }
 }
 
-@each $type in (none, inline, block, inline-block, flex, inline-flex) {
-  .d-#{$type} {
-    display: $type !important;
+@each $value in (none, inline, block, inline-block, flex, inline-flex) {
+  .d-#{$value} {
+    display: $value !important;
+  }
+}
+
+@each $value in (absolute, relative, static, sticky, fixed) {
+  .pos-#{$value} {
+    position: $value !important;
   }
 }
 
