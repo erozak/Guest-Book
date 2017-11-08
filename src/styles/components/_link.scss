@@ -1,0 +1,9 @@
+a {
+  color: $body-color;
+  text-decoration: none;
+  transition: all $transition-speed $transition-cuz;
+
+  &[href]:hover {
+    color: color("primary");
+  }
+}

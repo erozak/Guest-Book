@@ -8,33 +8,44 @@ $real-black: #000;
 
 // =---=---=---=---=---=---=---=---=---=---=
 
+$body-bg: $white;
+$body-color: #2c3e50;
+
+
+// =---=---=---=---=---=---=---=---=---=---=
+
 $theme-colors: (
   primary: #42b983,
-  secondary: #2c3e50,
+  secondary: #35495e,
   tertiary: $white
 );
-
-@function color($color: "primary") {
-  @return map-get($theme-colors, $color);
-}
 
 $status-colors: (
   normal: transparent,
   success: rgb(58, 255, 74),
   warning: rgb(248, 245, 53),
   danger: rgb(243, 50, 50),
-  info: rgb(76, 205, 245)
+  info: rgb(76, 205, 245),
+  muted: rgba($body-color, 0.24)
+  );
+
+@import "./utils/colors";
+
+/* =---=---=---=---=---= Gutter =---=---=---=---=---=---= */
+$gutter: (
+  0: 0,
+  1: .15rem,
+  2: .35rem,
+  3: .5rem,
+  4: .75rem,
+  5: 1rem,
+  6: 1.35rem,
+  7: 1.75rem,
+  8: 2.15rem,
+  9: 2.875rem
 );
 
-@function status($color: "normal") {
-  @return map-get($status-colors, $color);
-}
-
-
-/* =---=---=---=---=---= Body =---=---=---=---=---=---= */
-
-$body-bg: $white;
-$body-color: #2c3e50;
+@import "./utils/gutter";
 
 /* =---=---=---=---=---= Font =---=---=---=---=---=---= */
 
@@ -44,6 +55,48 @@ $font: "Avenir",
        Arial,
        sans-serif;
 
+$font-title: "Gentium Book Basic",
+             "Times roman",
+             "Noto Sans CJK TC",
+             serif;
+
+$size: (
+  xl: 1.75em,
+  lg: 1.35em,
+  sm: .875em,
+  xs: .75em
+);
+
+
 /* =---=---=---=---=---= Link =---=---=---=---=---=---= */
 
 $link-color: #42b983;
+
+/* =---=---=---=---=---= Box =---=---=---=---=---=---= */
+
+$box-padding-x: 1.25rem;
+$box-padding-y: .75rem;
+$box-padding: $box-padding-y $box-padding-x;
+
+/* =---=---=---=---=---= input =---=---=---=---=---=---= */
+$input-margin-x: auto;
+$input-margin-y: 1rem;
+$input-margin: $input-margin-y $input-margin-x;
+
+$input-border-width: 1px;
+$input-border-style: solid;
+$input-border-color: color("secondary");
+$input-border: $input-border-width $input-border-style $input-border-color;
+
+$input-padding-x: 1.25rem;
+$input-padding-y: .75rem;
+$input-padding: $input-padding-y $input-padding-x;
+
+$cb-padding-x: .75rem;
+$cb-padding-y: .15em;
+$cb-padding: $cb-padding-y $cb-padding-x;
+
+/* =---=---=---=---=---= Others =---=---=---=---=---=---= */
+
+$transition-speed: .14s;
+$transition-cuz: ease-in-out;

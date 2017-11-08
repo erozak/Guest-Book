@@ -1,63 +1,71 @@
 <template lang="pug">
-  form.editor
+  form.editor.flex-static(v-show="toggler")
+    .container
+      .input-group.groupon
+        //- Name
+        .addon.input-group.flex-gorw
+          label.lb(for="editor-name")
+            input#editor-name.input(
+              type="text"
+              name="name"
+              placeholder="I'm ..."
+              v-model="name"
+              v-validate.initial="'alpha_spaces|max:56'"
+              :class="{'invalid': errors.has('name') }"
+            )
 
-    //- Name
-    label(for="editor-name")
-      input#editor-name.input(
-        type="text"
-        name="name"
-        placeholder="I'm ..."
-        v-model="name"
-        v-validate.initial="'alpha_spaces|max:56'"
-        :class="{'invalid': errors.has('name') }"
-      )
-      span.msgbox(v-show="errors.has('name')") {{ errors.first('name') }}
+        //- Gender
+        .addon.cb-group
+          //- Male
+          input#gender-male.cb(type="radio" name="gender" value="1" v-model="gender")
+          label.lb-cb(for="gender-male" title="Male")
+            Icon(name="mars")
 
-    //- Gender
-    .cb-group
-      //- Male
-      input#gender-male.cb(type="radio" name="gender" value="1" v-model="gender")
-      label.lb.lb-cb(for="gender-male" title="Male")
-        Icon(name="mars")
+          //- Neutral
+          input#gender-mystery.cb(type="radio" name="gender" value="-1" v-model="gender" checked)
+          label.lb-cb(for="gender-mystery" title="Neutral")
+            Icon(name="genderless")
 
-      //- Neutral
-      input#gender-mystery.cb(type="radio" name="gender" value="-1" v-model="gender" checked)
-      label.lb.lb-cb(for="gender-mystery" title="Neutral")
-        Icon(name="genderless")
+          //- Female
+          input#gender-female.cb(type="radio" name="gender" value="0" v-model="gender")
+          label.lb-cb(for="gender-female" title="Female")
+            Icon(name="venus")
 
-      //- Female
-      input#gender-female.cb(type="radio" name="gender" value="0" v-model="gender")
-      label.lb.lb-cb(for="gender-female" title="Female")
-        Icon(name="venus")
+      //- Email
+      .input-group
+        label.lb(for="editor-mail")
+          input#editor-mail.input(
+            type="mail"
+            name="mail"
+            placeholder="Contact me at ..."
+            v-model="mail"
+            v-validate.initial="'email'"
+            :class="{'invalid': errors.has('mail') }"
+          )
 
-    //- Email
-    label.lb(for="editor-mail")
-      input#editor-mail.input(
-        type="mail"
-        name="mail"
-        placeholder="Contact me at ..."
-        v-model="mail"
-        v-validate.initial="'email'"
-        :class="{'invalid': errors.has('mail') }"
-      )
-      span.msgbox(v-show="errors.has('mail')") {{ errors.first('mail') }}
+      //- Message
+      .input-group.flex-gorw
+        label.lb(for="editor-msg")
+          input#editor-msg.input(
+            type="text"
+            name="msg"
+            placeholder="Type somthimg ..."
+            v-model="message"
+            v-validate="'max:140|required'"
+            :class="{'invalid': errors.has('msg') }"
+          )
 
-    //- Message
-    label.lb(for="editor-msg")
-      input#editor-msg.input(
-        type="text"
-        name="msg"
-        placeholder="Type somthimg ..."
-        v-model="message"
-        v-validate="'max:140|required'"
-        :class="{'invalid': errors.has('msg') }"
-      )
-      span.msgbox(v-show="errors.has('msg')") {{ errors.first('msg') }}
+      p.msgbox
+        span.d-block {{errors.first('name')}}
+        span.d-block {{errors.first('mail')}}
+        span.d-block {{errors.first('msg')}}
 
-    button.btn(
-      type="button"
-      @click="signIn"
-    ) Sign in
+      button.btn.flex-static(
+        type="button"
+        @click="onSignIn"
+        :disabled="errors.any() || message.length <= 0"
+      ) Sign in
+
 </template>
 
 <script>
@@ -70,6 +78,12 @@ import 'vue-awesome/icons/venus';
 
 export default {
   name: 'Editor',
+  props: {
+    toggler: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       name: '',
@@ -79,22 +93,41 @@ export default {
     };
   },
   methods: {
-    signIn() {
-      const name = this.name;
-      const gender = Number(this.gender);
-      const mail = this.mail;
-      const content = this.message;
+    onSignIn() {
+      this.$validator.validateAll()
+        .then((isDone) => {
+          if (isDone) {
+            const name = this.name;
+            const gender = Number(this.gender);
+            const mail = this.mail;
+            const content = this.message;
 
-      if (content.length > 0) {
-        this.$emit('on-sign-in', {
-          id: shortid.generate(),
-          timestamp: Date.now(),
-          name: name.length ? name : undefined,
-          mail: mail.lenth ? mail : undefined,
-          gender,
-          content,
+            this.$emit('on-signin-msg', {
+              id: shortid.generate(),
+              timestamp: Date.now(),
+              name: name.length ? name : undefined,
+              mail: mail.lenth ? mail : undefined,
+              gender,
+              content,
+            });
+
+            this.$emit('on-editor-toggle', {
+              status: false,
+            });
+          } else return false;
+
+          return true;
+        })
+        .then((isDone) => {
+          if (isDone) {
+            this.name = '';
+            this.gender = '-1';
+            this.mail = '';
+            this.message = '';
+
+            this.$nextTick(() => this.errors.clear());
+          }
         });
-      }
     },
   },
   components: {
@@ -102,6 +135,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-</style>

@@ -2,9 +2,13 @@
   #app
     .body-wrap
       App-header
-      .body-inner
-        Editor(@on-sign-in="signinMsg")
-        hr
+      main#main.body-inner.flex-gorw
+        Editor-toggler(:status="ui.toggler.editor" @on-editor-toggle="onEditorToggle")
+        Editor(
+          :toggler="ui.toggler.editor"
+          @on-signin-msg="onSigninMsg"
+          @on-editor-toggle="onEditorToggle"
+        )
         Book(:messages="messages")
       App-footer(v-bind="author")
 </template>
@@ -13,6 +17,7 @@
 import AppHeader from './frame/Header';
 import AppFooter from './frame/Footer';
 import Editor from './components/Editor';
+import EditorToggler from './components/EditorToggler';
 import Book from './components/Book';
 
 export default {
@@ -23,33 +28,38 @@ export default {
         name: 'Erozak',
         website: 'https://github.erozak.com',
         repo: 'https://github.com/erozak/Guest-Book',
-        timestamp: 'Nov 2017',
+        timestamp: '2017',
+      },
+      ui: {
+        toggler: {
+          editor: false,
+        },
       },
       messages: [],
     };
   },
+  computed: {
+    editorTogglerIcon() {
+      return this.ui.toggler.editor ? 'times' : 'comment';
+    },
+    editorTogglerTitle() {
+      return this.ui.toggler.editor ? 'Close comment editor' : 'Open comment editor';
+    },
+  },
   methods: {
-    signinMsg(msg) {
-      this.messages.push(msg);
+    onSigninMsg(msg) {
+      this.messages.unshift(msg);
+    },
+    onEditorToggle({ status }) {
+      this.ui.toggler.editor = status;
     },
   },
   components: {
     AppHeader,
     AppFooter,
-    Editor,
     Book,
+    Editor,
+    EditorToggler,
   },
 };
 </script>
-
-<style lang="scss">
-@import './styles/variables';
-
-body {
-  font-family: $font;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: color('secondary');
-}
-</style>

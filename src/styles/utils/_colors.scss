@@ -1,0 +1,7 @@
+@function color($color: "primary") {
+  @return map-get($theme-colors, $color);
+}
+
+@function status($color: "normal") {
+  @return map-get($status-colors, $color);
+}

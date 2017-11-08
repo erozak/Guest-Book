@@ -1,7 +1,7 @@
 <template lang="pug">
-  footer(v-once)
-    p
-      a(
+  footer#footer.flex-static(v-once)
+    p.m-0
+      a.mr-3(
         :href="repo"
         rel="nofollow noopener noreferrer"
         target="_blank"

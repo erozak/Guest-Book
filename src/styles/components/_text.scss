@@ -1,0 +1,15 @@
+.title {
+  font-family: $font-title !important;
+  font-weight: 700;
+}
+
+.text-muted {
+  color: status("muted");
+}
+
+@each $key, $value in $size {
+  .size-#{$key} {
+    font-size: $value !important;
+  }
+}
+

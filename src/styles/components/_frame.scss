@@ -1,0 +1,99 @@
+.body-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-top: 5px solid color("secondary");
+  min-height: 100vh;
+}
+
+.body-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+
+#header,
+#main,
+#footer {
+  position: relative;
+}
+
+#header {
+  h1 {
+    color: color("secondary");
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    margin: .125rem auto 0;
+    width: 6em;
+    height: 1px;
+    background-color: color("secondary");
+  }
+}
+
+#footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: .75em;
+  padding: $box-padding;
+
+  .fa-icon {
+    margin-bottom: -2px;
+    height: 100%;
+    width: auto;
+  }
+}
+
+#editor-toggler {
+  right: gutter(5);
+  bottom: 0;
+  position: absolute;
+  border: 0 none;
+  border-radius: 2rem;
+  padding: gutter(3) 1rem;
+  width: 4.5rem;
+  height: 2.5rem;
+  z-index: 60;
+  background-color: color("primary");
+  transition: all $transition-speed $transition-cuz;
+
+  &:not(:disabled) {
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken(color("primary"), 4%);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 .15em color("secondary");
+    }
+
+    &.actived {
+      background-color: color("secondary");
+
+      &:hover {
+        background-color: lighten(color("secondary"), 8%);
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 .15em color("primary");
+
+      }
+    }
+
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: status("muted");
+  }
+
+  & > .fa-icon {
+    fill: $white;
+    height: 100%;
+    width: auto;
+  }
+}

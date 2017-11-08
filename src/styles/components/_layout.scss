@@ -1,0 +1,54 @@
+.flex-static {
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+.flex-gorw {
+  flex-grow: 1 !important;
+}
+
+.flex-mid {
+  justify-content: center !important;
+}
+
+.self-center {
+  align-self: center !important;
+}
+
+@each $type, $typeName in (m: "margin", p: "padding") {
+  @each $level, $value in $gutter {
+
+    @each $dir, $dirName in (t: "top", r: "right", b: "bottom", l: "left") {
+      .#{$type}#{$dir}-#{$level} {
+        #{$typeName}-#{$dirName}: $value;
+      }
+    }
+
+    .#{$type}-#{$level} {
+      #{$typeName}: $value;
+    }
+
+    .#{$type}x-#{$level} {
+      #{$typeName}-right: $value;
+      #{$typeName}-left: $value;
+    }
+
+    .#{$type}y-#{$level} {
+      #{$typeName}-top: $value;
+      #{$typeName}-bottom: $value;
+
+    }
+
+  }
+}
+
+@each $type in (none, inline, block, inline-block, flex, inline-flex) {
+  .d-#{$type} {
+    display: $type !important;
+  }
+}
+
+.container {
+  margin: 0 auto;
+  width: 80%;
+}

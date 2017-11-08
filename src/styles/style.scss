@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Gentium+Book+Basic:700');
+
+@import "./variables";
+@import "./utils";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  text-align: center;
+  color: $body-color;
+}
+
+input:focus,
+button:focus {
+  outline: 0 none;
+}
+
+@import "./components";

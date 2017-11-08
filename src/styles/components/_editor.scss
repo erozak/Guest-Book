@@ -1,0 +1,182 @@
+.editor {
+  top: 0;
+  left: 0;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  padding: gutter(6) 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($white, .76);
+  z-index: 50;
+
+  & > .container {
+    padding: $input-margin;
+
+    & > .input-group {
+      margin-top: -1px !important;
+    }
+  }
+
+  .input-group {
+    display: flex;
+
+    &:not(.groupon) {
+      flex-direction: column;
+
+      & > .input,
+      & > .lb > .input {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    &.groupon {
+      padding-left: 1px;
+
+      & > .addon {
+        margin-left: -1px !important;
+      }
+    }
+
+    & > .input-group {
+      margin: 0;
+    }
+
+    & > .lb {
+      width: 100%;
+      height: 100%;
+    }
+
+
+  }
+
+  .cb-group {
+    display: flex;
+    flex-wrap: nowrap;
+    padding-left: 1px;
+
+    & > .cb {
+      display: none;
+
+      &:checked + .lb-cb {
+        color: $white;
+        background-color: color("primary");
+      }
+    }
+
+    & > .lb-cb {
+      margin-left: -1px !important;
+    }
+  }
+
+  .lb {
+    display: flex;
+  }
+
+  .input,
+  .btn,
+  .lb-cb {
+    position: relative;
+    border: $input-border;
+    line-height: 1;
+    transition: all $transition-speed $transition-cuz;
+    z-index: 1;
+
+    &:hover {
+      z-index: 3;
+    }
+
+    &:focus {
+      z-index: 4;
+    }
+  }
+
+  .input,
+  .btn {
+    padding: $input-padding;
+
+  }
+
+  .input,
+  .lb-cb {
+
+    &:not(:disabled) {
+
+      &:hover {
+        background-color: lighten(color("secondary"), 64%);
+      }
+
+    }
+  }
+
+
+  .input {
+    background-color: $white;
+
+    &:not(:disabled) {
+
+      &:not(.invalid) {
+        &:hover,
+        &:focus {
+          border-color: color("secondary");
+        }
+
+        &:focus {
+          box-shadow: 0 0 0 .15rem rgba(color("primary"), .76);
+        }
+      }
+
+    }
+
+    &.invalid {
+      border-color: status("danger");
+      box-shadow: 0 0 0 .15rem rgba(status("danger"), .46);
+      z-index: 2;
+    }
+
+  }
+
+  .lb-cb {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: $cb-padding;
+  }
+
+  .msgbox {
+    padding: gutter(2) $box-padding-x;
+    min-height: calc( 1.6em + #{gutter(2)} * 2);
+    font-size: .75em;
+    color: status("danger");
+  }
+
+  .btn {
+    display: block;
+    border-color: transparent;
+    width: 100%;
+    color: $white;
+    background-color: color("primary");
+
+    &:not(:disabled) {
+
+      &:hover {
+        background-color: darken(color("primary"), 4%);
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 .15rem rgba(color("primary"), .76);
+      }
+
+    }
+
+    &:disabled {
+      border-color: status("muted");
+      color: status("muted");
+      background-color: transparent;
+      cursor: not-allowed;
+    }
+  }
+}
+
