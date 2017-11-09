@@ -64,6 +64,20 @@
   }
 }
 
+@each $value in (hidden, auto, scroll) {
+  .of-#{$value} {
+    overflow: $value;
+  }
+
+  .of-y-#{$value} {
+    overflow: $value;
+  }
+
+  .of-x-#{$value} {
+    overflow: $value;
+  }
+}
+
 .container {
   margin: 0 auto;
   width: 80%;

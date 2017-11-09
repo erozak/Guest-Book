@@ -1,69 +1,65 @@
 .body-wrap {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .body-inner {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
-
 
 #header,
 #footer {
-  position: relative;
+    position: relative;
 }
 
 #header-wrap {
-  top: 0;
-  left: 0;
-  position: fixed;
-  border-top: $deco-height solid color("secondary");
-  padding-bottom: .2em;
-  width: 100%;
-  max-height: 100vh;
-  background-color: rgba($white, .76);
-  overflow-y: auto;
-  z-index: 50;
+    top: 0;
+    left: 0;
+    position: fixed;
+    border-top: $deco-height solid color("secondary");
+    padding-bottom: gutter(2);
+    width: 100%;
+    max-height: 100vh;
+    background-color: rgba($white, .92);
+    overflow-y: auto;
+    z-index: 50;
 }
 
 #header {
-  background-color: $white;
-
-  h1 {
-    color: color("secondary");
-  }
-
-  &::after {
-    content: "";
-    display: block;
-    margin: .125rem auto 0;
-    width: 6em;
-    height: 1px;
-    background-color: color("secondary");
-  }
+    background-color: $white;
+    h1 {
+        color: color("secondary");
+    }
+    &::after {
+        content: "";
+        display: block;
+        margin: .125rem auto 0;
+        width: 6em;
+        height: 1px;
+        background-color: color("secondary");
+    }
 }
 
 #main {
-  z-index: 20;
+    z-index: 20;
 }
 
 #footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: .75em;
-  padding: $box-padding;
-  background-color: $white;
-  z-index: 10;
-
-  .fa-icon {
-    margin-bottom: -2px;
-    height: 100%;
-    width: auto;
-  }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: .75em;
+    padding: $box-padding;
+    background-color: $white;
+    z-index: 10;
+    .fa-icon {
+        margin-bottom: -2px;
+        height: 100%;
+        width: auto;
+    }
 }
 
 #greet {
@@ -81,53 +77,43 @@
 }
 
 #editor-toggler {
-  top: gutter(1);
-  position: sticky;
-  align-self: flex-end;
-  margin-right: $editor-toggle-right;
-  border: 0 none;
-  border-radius: 2rem;
-  padding: gutter(3) 1rem;
-  width: $editor-toggle-width;
-  height: $editor-toggle-height;
-  z-index: 60;
-  background-color: color("primary");
-  transition: all $transition-speed $transition-cuz;
-
-  &:not(:disabled) {
-    cursor: pointer;
-
-    &:hover {
-      background-color: darken(color("primary"), 4%);
+    top: gutter(1);
+    position: sticky;
+    align-self: flex-end;
+    margin-right: $editor-toggle-right;
+    border: 0 none;
+    border-radius: 2rem;
+    padding: gutter(3) 1rem;
+    width: $editor-toggle-width;
+    height: $editor-toggle-height;
+    z-index: 60;
+    background-color: color("primary");
+    transition: all $transition-speed $transition-cuz;
+    &:not(:disabled) {
+        cursor: pointer;
+        &:hover {
+            background-color: darken(color("primary"), 4%);
+        }
+        &:focus {
+            box-shadow: 0 0 0 .15em color("secondary");
+        }
+        &.actived {
+            background-color: color("secondary");
+            &:hover {
+                background-color: lighten(color("secondary"), 8%);
+            }
+            &:focus {
+                box-shadow: 0 0 0 .15em color("primary");
+            }
+        }
     }
-
-    &:focus {
-      box-shadow: 0 0 0 .15em color("secondary");
+    &:disabled {
+        cursor: not-allowed;
+        background-color: status("muted");
     }
-
-    &.actived {
-      background-color: color("secondary");
-
-      &:hover {
-        background-color: lighten(color("secondary"), 8%);
-      }
-
-      &:focus {
-        box-shadow: 0 0 0 .15em color("primary");
-
-      }
+    &>.fa-icon {
+        fill: $white;
+        height: 100%;
+        width: auto;
     }
-
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    background-color: status("muted");
-  }
-
-  & > .fa-icon {
-    fill: $white;
-    height: 100%;
-    width: auto;
-  }
 }

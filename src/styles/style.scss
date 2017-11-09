@@ -17,7 +17,12 @@ $editor-toggle-height: 2.5rem;
   box-sizing: border-box;
 }
 
+html {
+  width: 100%;
+}
+
 body {
+  width: 100%;
   font-family: $font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

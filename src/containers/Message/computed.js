@@ -2,13 +2,13 @@ import moment from 'moment';
 
 export default {
   mailHref() {
-    return (this.mail) ? `mailto: ${this.mail}` : '';
+    return (this.mail && this.mail.length > 0) ? `mailto: ${this.mail}` : '';
   },
   mailHrefTitle() {
-    return `Send mail to ${this.name}`;
+    return (this.mail && this.mail.length > 0) ? `Send mail to ${this.nickname}` : '';
   },
   genderIcon() {
-    const icons = ['genderless', 'mars', 'venus'];
+    const icons = ['genderless', 'venus', 'mars'];
 
     return icons[this.gender + 1];
   },

@@ -11,7 +11,9 @@
             @on-signin-msg="onSigninMsg"
             @on-editor-toggle="onEditorToggle"
           )
-      main#main.body-inner.container.flex-gorw(:style="{'padding-top': ui.offset.mainTop + 'px'}")
+      main#main.body-inner.container.flex-gorw(
+        :style="{'padding-top': ui.offset.mainTop + 'px'}"
+      )
         Book(:messages="messages")
       App-footer(v-bind="author")
 </template>
@@ -22,6 +24,8 @@ import AppFooter from './frame/Footer';
 import Editor from './components/Editor';
 import EditorToggler from './components/EditorToggler';
 import Book from './components/Book';
+
+import fakedata from './utils/fakedata';
 
 export default {
   name: 'App',
@@ -34,7 +38,7 @@ export default {
         repo: 'https://github.com/erozak/Guest-Book',
         timestamp: '2017',
       },
-      messages: [],
+      messages: fakedata,
       ui: {
         offset: {
           mainTop: 0,

@@ -16,3 +16,59 @@
     background-image: linear-gradient(0deg, $white, transparent);
   }
 }
+
+.msg {
+  display: block;
+  margin: gutter(3) 0;
+  border: $box-border;
+  border-width: $box-border-width gutter(1);
+  padding: $box-padding;
+
+  & .gender {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: $badge-padding-y #{gutter(5) - .025rem} $badge-padding-y gutter(5);
+    background-color: color("secondary");
+
+    &.male {
+      background-color: rgb(52, 155, 240);
+    }
+
+    &.female {
+      background-color: #d6477d;
+    }
+
+    & > .fa-icon {
+      fill: $white;
+      min-width: 1rem;
+      height: 100%;
+    }
+  }
+
+  & .name {
+    align-self: flex-start;
+    padding-right: gutter(2);
+    padding-left: gutter(3);
+    font-size: .875rem;
+    word-break: break-all;
+
+    .fa-icon {
+      margin-left: gutter(2);
+      width: .625rem;
+    }
+  }
+
+  & .timestamp {
+    align-self: flex-start;
+    padding-right: gutter(2);
+    padding-left: gutter(3);
+    font-size: 0.75em;
+    color: lighten(color("secondary"), 28%);
+  }
+
+  & .content {
+    margin-top: gutter(3);
+    word-break: break-all;
+  }
+}

@@ -1,5 +1,5 @@
 <template lang="pug">
-  .book.flex-gorw.d-flex(:class="{'flex-jc-center': messages.length <= 0}")
+  .book.flex-gorw(:class="{'flex-jc-center': messages.length <= 0}")
     template(v-if="messages.length <= 0")
       .self-center.text-muted.size-lg
         p.m-0

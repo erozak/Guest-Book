@@ -8,11 +8,11 @@
           label.lb(for="editor-name")
             input#editor-name.input(
               type="text"
-              name="name"
+              name="nickname"
               placeholder="I'm ..."
-              v-model="name"
+              v-model="nickname"
               v-validate.initial="'alpha_spaces|max:56'"
-              :class="{invalid: errors.has('name') }"
+              :class="{invalid: errors.has('nickname') }"
             )
 
         //- Gender
@@ -37,11 +37,11 @@
         label.lb(for="editor-mail")
           input#editor-mail.input(
             type="mail"
-            name="mail"
+            name="email"
             placeholder="Contact me at ..."
             v-model="mail"
             v-validate.initial="'email'"
-            :class="{invalid: errors.has('mail') }"
+            :class="{invalid: errors.has('email') }"
           )
 
       //- Message
@@ -49,17 +49,17 @@
         label.lb(for="editor-msg")
           input#editor-msg.input(
             type="text"
-            name="msg"
+            name="message"
             placeholder="Type somthimg ..."
             v-model="message"
             v-validate="'max:140|required'"
-            :class="{invalid: errors.has('msg') }"
+            :class="{invalid: errors.has('message') }"
           )
 
       p.msgbox
-        span.d-block {{errors.first('name')}}
-        span.d-block {{errors.first('mail')}}
-        span.d-block {{errors.first('msg')}}
+        span.d-block {{errors.first('nickname')}}
+        span.d-block {{errors.first('email')}}
+        span.d-block {{errors.first('message')}}
 
       button.btn.flex-static.mb-5(
         type="button"
@@ -87,7 +87,7 @@ export default {
   },
   data() {
     return {
-      name: '',
+      nickname: '',
       mail: '',
       gender: '-1',
       message: '',
@@ -98,7 +98,7 @@ export default {
       this.$validator.validateAll()
         .then((isDone) => {
           if (isDone) {
-            const name = this.name;
+            const nickname = this.nickname;
             const gender = Number(this.gender);
             const mail = this.mail;
             const content = this.message;
@@ -106,8 +106,8 @@ export default {
             this.$emit('on-signin-msg', {
               id: shortid.generate(),
               timestamp: Date.now(),
-              name: name.length ? name : undefined,
-              mail: mail.lenth ? mail : undefined,
+              nickname: nickname || nickname.length > 0 ? nickname : undefined,
+              mail: mail || mail.length > 0 ? mail : undefined,
               gender,
               content,
             });
@@ -121,7 +121,7 @@ export default {
         })
         .then((isDone) => {
           if (isDone) {
-            this.name = '';
+            this.nickname = '';
             this.gender = '-1';
             this.mail = '';
             this.message = '';
