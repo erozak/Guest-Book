@@ -1,6 +1,6 @@
 <template lang="pug">
-  .book.flex-gorw(:class="{'flex-jc-center': messages.length <= 0}")
-    template(v-if="messages.length <= 0")
+  .book.flex-gorw(:class="{'flex-jc-center': isEmpty}")
+    template(v-if="isEmpty")
       .self-center.text-muted.size-lg
         p.m-0
           | No messages here
@@ -14,32 +14,34 @@
 </template>
 
 <script>
+import { mapGetters, mapState, mapMutations } from 'vuex';
+
 import Message from './Message';
+
+import { TIME_TICK, TIMER_SET, TIMER_CLEAR } from '../store/types';
 
 export default {
   name: 'Book',
-  props: {
-    messages: {
-      type: Array,
-      default: [],
-    },
-  },
-  data() {
-    return {
-      now: Date.now(),
-      timer: undefined,
-    };
+  computed: {
+    ...mapState([
+      'now',
+      'messages',
+    ]),
+    ...mapGetters([
+      'isEmpty',
+    ]),
   },
   methods: {
-    updateTime() {
-      this.now = Date.now();
-    },
+    ...mapMutations({
+      setTimer: TIMER_SET,
+      clearTimer: TIMER_CLEAR,
+    }),
   },
   created() {
-    this.timer = setInterval(this.updateTime, 500);
+    this.setTimer(setInterval(this.$state.dispatch(TIME_TICK), 500));
   },
   beforeDestroy() {
-    clearInterval(this.timer);
+    this.clearTimer();
   },
   components: {
     Message,

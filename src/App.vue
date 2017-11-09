@@ -4,77 +4,49 @@
       #header-wrap
         App-header
         .container.d-flex.flex-column
-          Editor-toggler(:status="ui.toggler.editor" @on-editor-toggle="onEditorToggle")
+          Editor-toggler
           #greet(ref="greetEl") {{greet}}
-          Editor(
-            :toggler="ui.toggler.editor"
-            @on-signin-msg="onSigninMsg"
-            @on-editor-toggle="onEditorToggle"
-          )
+          Editor
       main#main.body-inner.container.flex-gorw(
-        :style="{'padding-top': ui.offset.mainTop + 'px'}"
+        :style="{'padding-top': paddingTop}"
       )
-        Book(:messages="messages")
-      App-footer(v-bind="author")
+        Book
+      App-footer
 </template>
 
 <script>
+import { mapGetters, mapState, mapMutations } from 'vuex';
+
 import AppHeader from './frame/Header';
 import AppFooter from './frame/Footer';
 import Editor from './components/Editor';
 import EditorToggler from './components/EditorToggler';
 import Book from './components/Book';
 
-import fakedata from './utils/fakedata';
+import { MAIN_OFFSET, WINDOW_RESIZE } from './store/types';
 
 export default {
   name: 'App',
-  data() {
-    return {
-      greet: 'Come Leave some message to us!',
-      author: {
-        name: 'Erozak',
-        website: 'https://github.erozak.com',
-        repo: 'https://github.com/erozak/Guest-Book',
-        timestamp: '2017',
-      },
-      messages: fakedata,
-      ui: {
-        offset: {
-          mainTop: 0,
-        },
-        toggler: {
-          editor: false,
-        },
-      },
-    };
-  },
   computed: {
-    editorTogglerIcon() {
-      return this.ui.toggler.editor ? 'times' : 'comment';
-    },
-    editorTogglerTitle() {
-      return this.ui.toggler.editor ? 'Close comment editor' : 'Open comment editor';
-    },
+    ...mapState([
+      'greet',
+    ]),
+    ...mapGetters([
+      'paddingTop',
+    ]),
   },
   methods: {
-    onWindowResize() {
-      const newHeight = this.$refs.greetEl.getBoundingClientRect().bottom;
-
-      if (newHeight !== this.ui.offset.mainTop) {
-        this.ui.offset.mainTop = newHeight;
-      }
-    },
-    onSigninMsg(msg) {
-      this.messages.unshift(msg);
-    },
-    onEditorToggle({ status }) {
-      this.ui.toggler.editor = status;
-    },
+    ...mapMutations({
+      updateMainOffset: MAIN_OFFSET,
+    }),
   },
   mounted() {
-    this.ui.offset.mainTop = this.$refs.greetEl.getBoundingClientRect().bottom;
-    window.addEventListener('resize', this.onWindowResize);
+    this.updateMainOffset(this.$refs.greetEl.getBoundingClientRect().bottom);
+    window.addEventListener('resize', () => {
+      this.$store.dispatch(WINDOW_RESIZE, {
+        height: this.$refs.greetEl.getBoundingClientRect().bottom,
+      });
+    });
   },
   components: {
     AppHeader,

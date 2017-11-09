@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import Icon from 'vue-awesome/components/Icon';
 
 import 'vue-awesome/icons/envelope';
@@ -35,8 +36,6 @@ import 'vue-awesome/icons/envelope-o';
 import 'vue-awesome/icons/genderless';
 import 'vue-awesome/icons/mars';
 import 'vue-awesome/icons/venus';
-
-import messageContainer from '../containers/Message';
 
 export default {
   name: 'Message',
@@ -66,10 +65,34 @@ export default {
       default: 'Ooops! Something error ...',
     },
   },
+  computed: {
+    mailHref() {
+      return (this.mail && this.mail.length > 0) ? `mailto: ${this.mail}` : '';
+    },
+    mailHrefTitle() {
+      return (this.mail && this.mail.length > 0) ? `Send mail to ${this.nickname}` : '';
+    },
+    genderIcon() {
+      const icons = ['genderless', 'venus', 'mars'];
+
+      return icons[this.gender + 1];
+    },
+    momentTime() {
+      return moment(this.timestamp);
+    },
+    isoTime() {
+      return this.momentTime.format();
+    },
+    dateTime() {
+      return this.momentTime.format('h:mm:ss a, MMMM Do YYYY');
+    },
+    relativeTime() {
+      return this.momentTime.from(this.nowtime, false);
+    },
+  },
   components: {
     Icon,
   },
-  ...messageContainer,
 };
 </script>
 

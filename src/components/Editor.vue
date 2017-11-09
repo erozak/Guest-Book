@@ -72,19 +72,16 @@
 <script>
 import Icon from 'vue-awesome/components/Icon';
 import shortid from 'shortid';
+import { mapState } from 'vuex';
 
 import 'vue-awesome/icons/genderless';
 import 'vue-awesome/icons/mars';
 import 'vue-awesome/icons/venus';
 
+import { MSG_ADD, EDITOR_TOGGLE } from '../store/types';
+
 export default {
   name: 'Editor',
-  props: {
-    toggler: {
-      type: Boolean,
-      default: false,
-    },
-  },
   data() {
     return {
       nickname: '',
@@ -92,6 +89,11 @@ export default {
       gender: '-1',
       message: '',
     };
+  },
+  computed: {
+    ...mapState({
+      toggler: 'editorToggler',
+    }),
   },
   methods: {
     onSignIn() {
@@ -103,7 +105,7 @@ export default {
             const mail = this.mail;
             const content = this.message;
 
-            this.$emit('on-signin-msg', {
+            this.$store.dispatch(MSG_ADD, {
               id: shortid.generate(),
               timestamp: Date.now(),
               nickname: nickname || nickname.length > 0 ? nickname : undefined,
@@ -112,7 +114,7 @@ export default {
               content,
             });
 
-            this.$emit('on-editor-toggle', {
+            this.$store.commit(EDITOR_TOGGLE, {
               status: false,
             });
           } else return false;

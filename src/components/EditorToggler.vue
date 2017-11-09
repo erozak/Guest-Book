@@ -9,9 +9,13 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
+
 import Icon from 'vue-awesome/components/Icon';
 import 'vue-awesome/icons/comment';
 import 'vue-awesome/icons/times';
+
+import { EDITOR_TOGGLE } from '../store/types';
 
 export default {
   name: 'EditorToggler',
@@ -22,6 +26,9 @@ export default {
     },
   },
   computed: {
+    ...mapState({
+      status: 'editorToggler',
+    }),
     title() {
       return this.status ? 'Close comment editor' : 'Open comment editor';
     },
@@ -30,11 +37,9 @@ export default {
     },
   },
   methods: {
-    toggle() {
-      this.$emit('on-editor-toggle', {
-        status: !this.status,
-      });
-    },
+    ...mapMutations({
+      toggle: EDITOR_TOGGLE,
+    }),
   },
   components: {
     Icon,
