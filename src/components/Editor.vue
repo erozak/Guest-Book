@@ -72,7 +72,7 @@
 <script>
 import Icon from 'vue-awesome/components/Icon';
 import shortid from 'shortid';
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
 import 'vue-awesome/icons/genderless';
 import 'vue-awesome/icons/mars';
@@ -91,11 +91,17 @@ export default {
     };
   },
   computed: {
-    ...mapState({
+    ...mapState('frame', {
       toggler: 'editorToggler',
     }),
   },
   methods: {
+    ...mapMutations('book', {
+      addMsg: MSG_ADD,
+    }),
+    ...mapMutations('frame', {
+      toggleEditor: EDITOR_TOGGLE,
+    }),
     onSignIn() {
       this.$validator.validateAll()
         .then((isDone) => {
@@ -105,16 +111,18 @@ export default {
             const mail = this.mail;
             const content = this.message;
 
-            this.$store.dispatch(MSG_ADD, {
-              id: shortid.generate(),
-              timestamp: Date.now(),
-              nickname: nickname || nickname.length > 0 ? nickname : undefined,
-              mail: mail || mail.length > 0 ? mail : undefined,
-              gender,
-              content,
+            this.addMsg({
+              message: {
+                id: shortid.generate(),
+                timestamp: Date.now(),
+                nickname: nickname || nickname.length > 0 ? nickname : undefined,
+                mail: mail || mail.length > 0 ? mail : undefined,
+                gender,
+                content,
+              },
             });
 
-            this.$store.commit(EDITOR_TOGGLE, {
+            this.toggleEditor({
               status: false,
             });
           } else return false;

@@ -46,7 +46,7 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         include: [
-          resolve('node_modules/vue-octicon'),
+          resolve('node_modules/vue-awesome'),
           resolve('src'),
           resolve('test')
         ]

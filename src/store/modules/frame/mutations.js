@@ -1,13 +1,15 @@
 import {
-  BOOK_OFFSET,
+  MAIN_OFFSET,
   EDITOR_TOGGLE,
 } from '../../types';
 
 export default {
-  [BOOK_OFFSET](state, { offset }) {
+  [MAIN_OFFSET](state, { offset }) {
     state.offsetTop = offset;
   },
-  [EDITOR_TOGGLE](state, { status }) {
-    state.editorToggler = status || (!status && state.editorToggler);
+  [EDITOR_TOGGLE](state, payload) {
+    const status = payload ? payload.status : false;
+
+    state.editorToggler = status || (!status && !state.editorToggler);
   },
 };

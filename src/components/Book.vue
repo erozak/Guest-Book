@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapMutations } from 'vuex';
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex';
 
 import Message from './Message';
 
@@ -23,22 +23,25 @@ import { TIME_TICK, TIMER_SET, TIMER_CLEAR } from '../store/types';
 export default {
   name: 'Book',
   computed: {
-    ...mapState([
+    ...mapState('book', [
       'now',
       'messages',
     ]),
-    ...mapGetters([
+    ...mapGetters('book', [
       'isEmpty',
     ]),
   },
   methods: {
-    ...mapMutations({
+    ...mapActions('book', {
+      tickTime: TIME_TICK,
+    }),
+    ...mapMutations('book', {
       setTimer: TIMER_SET,
       clearTimer: TIMER_CLEAR,
     }),
   },
   created() {
-    this.setTimer(setInterval(this.$state.dispatch(TIME_TICK), 500));
+    this.setTimer(setInterval(this.tickTime, 500));
   },
   beforeDestroy() {
     this.clearTimer();

@@ -1,5 +1,5 @@
 export default {
   isEmpty({ messages }) {
-    return messages && messages.length > 0;
+    return !messages || messages.length <= 0;
   },
 };

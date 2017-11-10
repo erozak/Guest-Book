@@ -11,11 +11,11 @@
         :style="{'padding-top': paddingTop}"
       )
         Book
-      App-footer
+      App-footer(v-bind="author")
 </template>
 
 <script>
-import { mapGetters, mapState, mapMutations } from 'vuex';
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex';
 
 import AppHeader from './frame/Header';
 import AppFooter from './frame/Footer';
@@ -28,23 +28,29 @@ import { MAIN_OFFSET, WINDOW_RESIZE } from './store/types';
 export default {
   name: 'App',
   computed: {
-    ...mapState([
+    ...mapState('frame', [
       'greet',
+      'author',
     ]),
-    ...mapGetters([
+    ...mapGetters('frame', [
       'paddingTop',
     ]),
   },
   methods: {
-    ...mapMutations({
+    ...mapActions('frame', {
+      onWindowResize: WINDOW_RESIZE,
+    }),
+    ...mapMutations('frame', {
       updateMainOffset: MAIN_OFFSET,
     }),
   },
   mounted() {
-    this.updateMainOffset(this.$refs.greetEl.getBoundingClientRect().bottom);
+    this.updateMainOffset({
+      offset: this.$refs.greetEl.getBoundingClientRect().bottom,
+    });
     window.addEventListener('resize', () => {
-      this.$store.dispatch(WINDOW_RESIZE, {
-        height: this.$refs.greetEl.getBoundingClientRect().bottom,
+      this.onWindowResize({
+        el: this.$refs.greetEl,
       });
     });
   },

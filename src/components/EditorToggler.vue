@@ -19,14 +19,8 @@ import { EDITOR_TOGGLE } from '../store/types';
 
 export default {
   name: 'EditorToggler',
-  props: {
-    status: {
-      type: Boolean,
-      default: false,
-    },
-  },
   computed: {
-    ...mapState({
+    ...mapState('frame', {
       status: 'editorToggler',
     }),
     title() {
@@ -37,7 +31,7 @@ export default {
     },
   },
   methods: {
-    ...mapMutations({
+    ...mapMutations('frame', {
       toggle: EDITOR_TOGGLE,
     }),
   },
